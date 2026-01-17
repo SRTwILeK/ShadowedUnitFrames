@@ -1,13 +1,12 @@
-## Interface: 30401
+## Interface: 20505
 ## Title: Shadowed Unit Frames
-## Notes: Moooooooooooooooooo
-## Author: Shadowed
-## Version: v4.3.4-classic
+## Notes: Forked from original Shadowed Unit Frames
+## Author: Shadowed / SRTwILeK
+## Version: v5.0.0-tbc-anniversary
 ## SavedVariables: ShadowedUFDB
-## X-Website: https://www.wowace.com/addons/shadowed-unit-frames/
+## X-Website: https://legacy.curseforge.com/wow/addons/shadowed-unit-frames-tbc-anniversary
 ## OptionalDeps: Ace3, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets, LibSpellRange-1.0, Clique
-## OptionalDeps: Ace3, LibSharedMedia-3.0, AceGUI-3.0-SharedMediaWidgets, LibSpellRange-1.0, LibClassicDurations, Clique, LibClassicCasterino
-## X-Curse-Project-ID: 19268
+## X-Curse-Project-ID: 1432720
 ## X-WoWI-ID: 13494
 
 #@no-lib-strip@

@@ -140,7 +140,7 @@ Fully localized in multiple languages:
 
 ### Game Version
 - **Interface**: 20505 (TBC Anniversary Edition / 2.5.5)
-- **Version**: v4.3.4-classic
+- **Version**: v5.0.0-tbc-anniversary
 
 ### Known Compatible Addons
 - Clique - Click-casting integration
@@ -158,7 +158,7 @@ Fully localized in multiple languages:
 - **Nevcairiel** - Classic version adaptation (v4.3.4-classic)
 
 ### This Version
-- Adapted for The Burning Crusade Anniversary Edition (2.5.5)
+- **SRTwILeK** - Adapted for The Burning Crusade Anniversary Edition (2.5.5)
 
 ### Community
 Special thanks to the WoW addon community and all contributors to the libraries used in this project.
@@ -167,8 +167,8 @@ Special thanks to the WoW addon community and all contributors to the libraries 
 
 - **Original Project**: [Shadowed Unit Frames](https://github.com/Shadowed/ShadowedUnitFrames)
 - **Classic Fork**: [Nevcairiel's Classic Version](https://github.com/Nevcairiel/ShadowedUnitFrames/tree/v4.3.4-classic)
-- **WoWAce**: https://www.wowace.com/addons/shadowed-unit-frames/
-- **Curse Project ID**: 19268
+- **CurseForge**: https://legacy.curseforge.com/wow/addons/shadowed-unit-frames-tbc-anniversary
+- **Curse Project ID**: 1432720
 - **WoWI ID**: 13494
 
 ## Support
@@ -192,7 +192,9 @@ This addon is a fork and adaptation of the original Shadowed Unit Frames. Please
 
 ## Changelog
 
-### TBC Anniversary Edition Version
+### v5.0.0-tbc-anniversary
+- Consolidated TOC files into single version supporting all game versions
+- Removed separate `_TBC.toc` and `_Vanilla.toc` files for cleaner structure
 - Updated for Interface 20505 (TBC Anniversary 2.5.5)
 - Maintained compatibility with Classic API
 - Integrated LibClassicDurations for accurate buff/debuff tracking
