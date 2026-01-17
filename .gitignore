@@ -1,0 +1,17 @@
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# Editor files
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Packager output
+.release/
