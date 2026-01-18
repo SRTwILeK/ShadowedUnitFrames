@@ -1,7 +1,7 @@
 ## Interface: 20505
 ## Title: Shadowed UF (Options)
 ## Notes: Configuration for Shadowed Unit Frames.
-## Author: Shadowed / SRTwILeK
+## Author: Shadowed
 ## LoadOnDemand: true
 ## Dependencies: ShadowedUnitFrames
 
