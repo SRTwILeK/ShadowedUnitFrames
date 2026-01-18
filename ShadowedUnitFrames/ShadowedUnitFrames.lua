@@ -721,22 +721,36 @@ function ShadowUF:HideBlizzardFrames()
 	end
 
 	if( self.db.profile.hidden.party and not active_hiddens.party ) then
-		for i=1, MAX_PARTY_MEMBERS do
-			local name = "PartyMemberFrame" .. i
-			hideBlizzardFrames(false, _G[name], _G[name .. "HealthBar"], _G[name .. "ManaBar"])
+		-- In TBC Classic, the party frame is called "PartyFrame", not PartyMemberFrame1-4
+		if( PartyFrame ) then
+			UnregisterUnitWatch(PartyFrame)
+			PartyFrame:UnregisterAllEvents()
+			PartyFrame:Hide()
+			PartyFrame:SetParent(ShadowUF.hiddenFrame)
+
+			-- Hook OnShow to immediately hide when Blizzard tries to show it
+			PartyFrame:SetScript("OnShow", PartyFrame.Hide)
 		end
 
-		-- Only unregister GROUP_ROSTER_UPDATE if SUF party frames are actually enabled
+		-- Also hide the old-style frames in case they exist (retail/later versions)
+		for i=1, MAX_PARTY_MEMBERS do
+			local frame = _G["PartyMemberFrame" .. i]
+			if( frame ) then
+				UnregisterUnitWatch(frame)
+				frame:UnregisterAllEvents()
+				frame:Hide()
+				frame:SetParent(ShadowUF.hiddenFrame)
+				frame:SetScript("OnShow", frame.Hide)
+			end
+		end
+
+		-- Only unregister GROUP_ROSTER_UPDATE from UIParent if SUF party frames are actually enabled
 		-- This allows "Use Raid-Style Party Frames" to work when SUF party frames are disabled
 		if( self.enabledUnits.party ) then
 			UIParent:UnregisterEvent("GROUP_ROSTER_UPDATE")
 		end
-
-		-- This just makes sure
-		if( CompactPartyFrame ) then
-			hideBlizzardFrames(false, CompactPartyFrame)
-		end
 	end
+
 
 	if( CompactRaidFrameManager ) then
 		if( self.db.profile.hidden.raid and not active_hiddens.raidTriggered ) then
@@ -748,6 +762,25 @@ function ShadowUF:HideBlizzardFrames()
 				if( InCombatLockdown() ) then return end
 
 				CompactRaidFrameManager:Hide()
+				CompactRaidFrameContainer:Hide()
+				CompactRaidFrameManager:SetParent(ShadowUF.hiddenFrame)
+				CompactRaidFrameContainer:SetParent(ShadowUF.hiddenFrame)
+
+				-- Hide all individual raid group frames
+				for i=1, 8 do
+					local group = _G["CompactRaidGroup" .. i]
+					if( group ) then
+						group:Hide()
+						group:SetParent(ShadowUF.hiddenFrame)
+
+						-- Set OnShow hook if not already set
+						if( not active_hiddens["CompactRaidGroup" .. i .. "_hooked"] ) then
+							active_hiddens["CompactRaidGroup" .. i .. "_hooked"] = true
+							group:SetScript("OnShow", group.Hide)
+						end
+					end
+				end
+
 				local shown = CompactRaidFrameManager_GetSetting("IsShown")
 				if( shown and shown ~= "0" ) then
 					CompactRaidFrameManager_SetSetting("IsShown", "0")
@@ -915,11 +948,19 @@ end
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("PLAYER_LOGIN")
 frame:RegisterEvent("ADDON_LOADED")
+frame:RegisterEvent("GROUP_ROSTER_UPDATE")
 frame:SetScript("OnEvent", function(self, event, addon)
 	if( event == "PLAYER_LOGIN" ) then
 		ShadowUF:OnInitialize()
 		self:UnregisterEvent("PLAYER_LOGIN")
 	elseif( event == "ADDON_LOADED" and ( addon == "Blizzard_ArenaUI" or addon == "Blizzard_CompactRaidFrames" ) ) then
 		ShadowUF:HideBlizzardFrames()
+	elseif( event == "GROUP_ROSTER_UPDATE" ) then
+		if( not ShadowUF.db ) then return end
+
+		-- Call HideBlizzardFrames to catch newly created party/raid frames
+		if( ShadowUF.db.profile.hidden.party or ShadowUF.db.profile.hidden.raid ) then
+			ShadowUF:HideBlizzardFrames()
+		end
 	end
 end)
