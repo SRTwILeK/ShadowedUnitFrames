@@ -726,8 +726,11 @@ function ShadowUF:HideBlizzardFrames()
 			hideBlizzardFrames(false, _G[name], _G[name .. "HealthBar"], _G[name .. "ManaBar"])
 		end
 
-		-- This stops the compact party frame from being shown
-		UIParent:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		-- Only unregister GROUP_ROSTER_UPDATE if SUF party frames are actually enabled
+		-- This allows "Use Raid-Style Party Frames" to work when SUF party frames are disabled
+		if( self.enabledUnits.party ) then
+			UIParent:UnregisterEvent("GROUP_ROSTER_UPDATE")
+		end
 
 		-- This just makes sure
 		if( CompactPartyFrame ) then
